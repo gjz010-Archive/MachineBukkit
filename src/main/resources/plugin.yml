@@ -1,0 +1,9 @@
+name: MachineBukkit
+main: tk.gjz010.machinebukkit.MachineBukkit
+version: 1.5.2
+commands:
+   gettestmachine:
+      description: Test MachineBukkit.
+      usage: /<command>
+      permission: machinebukkit.admin
+      permission-message: You don't have <permission>
