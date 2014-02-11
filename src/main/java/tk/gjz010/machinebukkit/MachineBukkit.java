@@ -13,6 +13,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import tk.gjz010.machinebukkit.utils.PluginDownloader;
 /**
  *
  * @author Administrator
@@ -23,6 +24,9 @@ public final class MachineBukkit extends JavaPlugin{
     
     @Override
     public void onEnable(){
+        if (!this.getServer().getPluginManager().isPluginEnabled("SQLibrary")){
+           PluginDownloader.downloadPlugin(this, "43840");
+        }
         loggedmachines=new ArrayList<>();
         s=this.getServer();
         plugin=this;
@@ -32,6 +36,7 @@ public final class MachineBukkit extends JavaPlugin{
         s.getPluginManager().registerEvents(new MachineListener(), plugin);
         registerMachine(new TestMachine(),this);
         System.out.println("[MachineBukkit] "+java.util.ResourceBundle.getBundle("Bundle").getString("enable"));
+
     }
     @Override
     public void onDisable(){

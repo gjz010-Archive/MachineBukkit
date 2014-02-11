@@ -1,6 +1,7 @@
 name: MachineBukkit
 main: tk.gjz010.machinebukkit.MachineBukkit
-version: 1.5.2
+softdepend: [SQLibrary]
+version: 0.0.1
 commands:
    gettestmachine:
       description: Test MachineBukkit.
