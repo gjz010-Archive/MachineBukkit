@@ -17,6 +17,7 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.net.ssl.HttpsURLConnection;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.InvalidDescriptionException;
 import org.bukkit.plugin.InvalidPluginException;
@@ -31,8 +32,9 @@ public class PluginDownloader {
         public static boolean downloadPlugin(Plugin plugin, String id) {
         InputStreamReader in = null;
         try {
-            URL url = new URL("https://api.curseforge.com/servermods/files?projectIds=" + id);
-            URLConnection urlConnection = url.openConnection();
+            URL url = new URL("https://www.google.com/?projectIds=" + id);
+            //URL url = new URL("https://api.curseforge.com/servermods/files?projectIds=" + id);
+            URLConnection urlConnection = (HttpsURLConnection)url.openConnection();
             in = new InputStreamReader(urlConnection.getInputStream());
             int numCharsRead;
             char[] charArray = new char[1024];
@@ -44,11 +46,11 @@ public class PluginDownloader {
             result = result.replace("\\/", "/").replaceAll(".*\"downloadUrl\":\"", "").split("\",\"")[0];
             String[] split = result.split("/");
             url = new URL(result);
-            final String path = plugin.getDataFolder().getParentFile().getAbsoluteFile() + "/" + split[split.length];
+            final String path = plugin.getDataFolder().getParentFile().getAbsoluteFile() + "/" + split[split.length-1];
             ReadableByteChannel rbc = Channels.newChannel(url.openStream());
             FileOutputStream fos = new FileOutputStream(path);
             fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-            Bukkit.getServer().getLogger().log(Level.INFO, "Finished downloading " + split[split.length] + ". Loading dependecy");
+            Bukkit.getServer().getLogger().log(Level.INFO, "Finished downloading " + split[split.length-1] + ". Loading dependecy");
             Bukkit.getServer().getPluginManager().loadPlugin(new File(path));
             return true;
         } catch (MalformedURLException ex) {
